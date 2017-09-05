@@ -9,10 +9,10 @@ import {
 } from 'react-native';
 
 import {Provider} from 'react-redux';
-import configureStore from './app/store/CreateStore';
+import store from './app/store/CreateStore';
 import APP from './app/App'
 
-export default class dyb_app extends Component {
+export default class destiny_app extends Component {
 
     constructor() {
         super();
@@ -20,7 +20,7 @@ export default class dyb_app extends Component {
 
     render() {
         return (
-            <Provider store={this.state.store}>
+            <Provider store={store}>
                 <APP/>
             </Provider>
         );
@@ -28,3 +28,4 @@ export default class dyb_app extends Component {
 }
 
 AppRegistry.registerComponent('destiny_app', () => destiny_app);
+

@@ -7,15 +7,34 @@ import {connect} from 'react-redux';
 import {
     Text
 } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
+import Login from './containers/Login/App';
+import Home from './containers/Home/App';
+import TabNav from './containers/TabNav/App';
+
+const AppNavigator = StackNavigator(
+    {
+        Login: { 
+            screen: Login,
+            navigationOptions: ({navigation}) => ({
+                title: 'Login',
+                headerTitle: 'sfasd'
+            })
+        },
+        Home: { 
+            screen: Home,
+            navigationOptions: ({ navigation, screenProps }) => ({
+                title: `${navigation.state.params.name}'s Profile'`,
+            }),        
+        },
+        TabNav: {
+            screen: TabNav,
+        }
+    }, 
+    {
+        headerMode: 'none', //取消默认标题栏
     }
+);
 
-    render() {
-        <Text>hahah</Text>
-    }
-}
-
-export default  App;
+export default  AppNavigator;

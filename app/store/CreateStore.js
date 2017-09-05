@@ -1,8 +1,8 @@
-import {AsyncStorage} from 'react-native'
-import { applyMiddleware, createStore } from 'redux'
-import {createLogger} from 'redux-logger'
-import {persistStore, autoRehydrate} from'redux-persist'
-import rootReducer from '../reducers/Reducers'
+import {AsyncStorage} from 'react-native';
+import { applyMiddleware, createStore } from 'redux';
+import {createLogger} from 'redux-logger';
+import {persistStore, autoRehydrate} from'redux-persist';
+import rootReducer from '../reducers/rootReducer';
 
 function configureStore(onComplete) {
     const logger = createLogger()
@@ -18,14 +18,7 @@ function configureStore(onComplete) {
     persistStore(store, {
         storage: AsyncStorage,
         blacklist: [
-            'AccountReducer',
-            'RemoveDishReducer',
-            // 'CheckoutReducer',
-            // 'OrderReducer',
-            'SearchDishReducer',
-            'OrderReducer',
-            'TakeoutOrderReducer',
-            'WaiterOrderReducer',
+            
         ]
     }, onComplete)
 
@@ -36,4 +29,4 @@ function configureStore(onComplete) {
     return store;
 }
 
-export default configureStore
+export default configureStore();
