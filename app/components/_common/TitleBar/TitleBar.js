@@ -2,6 +2,7 @@
  * 顶部标题栏
  */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
 	StyleSheet,
 	Text,
@@ -12,6 +13,7 @@ import {
 	Dimensions,
 } from 'react-native';
 // import styles from './Styles';
+import Icon from '../../../common/icon/iconFont'
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 const WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -22,11 +24,13 @@ const beforeLollipop = Platform.OS === 'android' && Platform.Version < 21;
 
 class TitleBar extends Component {
 	static propTypes = {
-		title: React.PropTypes.string,                //页面标题
+		title: PropTypes.string,                      //页面标题
+		goBack: PropTypes.func,                       //回退键方法
 	};
 
 	static defaultProps = {
 		title: 'Title',
+		goBack: () => {}
 	};
 
 	constructor(props) {
@@ -38,27 +42,49 @@ class TitleBar extends Component {
 		let button = null;
 		React.Children.map(children, (child) => {
 			if (!child) return;
-			if (child.props.btn-type === 'left') {
+			if (child.props['btn-type'] === type) {
 				button = child;
 			}
 		});
 		return button;
 	}
 
-	renderLeftButton() {
+	/**
+	 * 渲染左侧按钮
+	 * @returns {XML}
+	 */
+	renderLeftBtn() {
 		const leftBtn = (               //默认的leftButton
-			<View>
-				<Image/>
-			</View>
+			<Text style={{
+				fontFamily: 'icomoon',
+				color: '#666',
+				fontSize: 40 * HEIGHT_SCALE,
+				marginLeft: 10 * WIDTH_SCALE
+			}}
+				  onPress={() => this.props.goBack()}
+			>
+				{Icon('ic_left_arrow')}
+			</Text>
 		);
 		let customBtn = this.getSpecifyBtn('left');
-		console.log(customBtn, 1)
-		if (customBtn) {
+		if (!customBtn) {
 			return leftBtn;
 		} else {
-			return React.cloneElement(customBtn, {
-				children: customBtn.props.children,
-			})
+			return React.cloneElement(customBtn);
+		}
+	}
+
+	/**
+	 * 渲染右侧按钮
+	 * @returns {XML}
+	 */
+	renderRightBtn() {
+		const rightBtn = null;  //默认的rightButton
+		let customBtn = this.getSpecifyBtn('right');
+		if (!customBtn) {
+			return rightBtn;
+		} else {
+			return React.cloneElement(customBtn);
 		}
 	}
 
@@ -67,15 +93,19 @@ class TitleBar extends Component {
 			style,
 			title,
 			titleStyle,
-			leftButton,
-			rightButton
 		} = this.props;
 
         return (
 			<View style={[styles.container, style]}>
-				{this.renderLeftButton()}
+				<View style={styles.leftBtn}>
+					{this.renderLeftBtn()}
+				</View>
+
 				<Text style={[styles.title, titleStyle]}>{title}</Text>
-				{rightButton}
+
+				<View style={styles.rightBtn}>
+					{this.renderRightBtn()}
+				</View>
 			</View>
         )
     }
@@ -95,7 +125,15 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 36 * HEIGHT_SCALE,
 		color: '#333'
-	}
+	},
+	leftBtn: {
+		position: 'absolute',
+		left: 20 * WIDTH_SCALE
+	},
+	rightBtn: {
+		position: 'absolute',
+		right: 20 * WIDTH_SCALE
+	},
 });
 
 export default TitleBar;

@@ -13,13 +13,13 @@ class App extends React.Component {
     }
 
     render() {
-        const {navigate, state} = this.props.navigation;
+        const {navigate, state, goBack} = this.props.navigation;
         const { params } = state;
 
         return (
 			<View>
-				<TitleBar>
-					<Text btn-type="left">left</Text>
+				<TitleBar title="主页" goBack={() => goBack()}>
+
 				</TitleBar>
 				<Text>主页{params.name}</Text>
 				<Button onPress={() => navigate('TabNav', {name: 'east'})} title="go Tab"/>
