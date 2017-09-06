@@ -26,6 +26,7 @@ class TitleBar extends Component {
 	static propTypes = {
 		title: PropTypes.string,                      //页面标题
 		goBack: PropTypes.func,                       //回退键方法
+		back: PropTypes.bool,                         //是否显示默认的返回键
 	};
 
 	static defaultProps = {
@@ -55,16 +56,26 @@ class TitleBar extends Component {
 	 */
 	renderLeftBtn() {
 		const leftBtn = (               //默认的leftButton
-			<Text style={{
-				fontFamily: 'icomoon',
-				color: '#666',
-				fontSize: 40 * HEIGHT_SCALE,
-				marginLeft: 10 * WIDTH_SCALE
-			}}
-				  onPress={() => this.props.goBack()}
+			<TouchableOpacity
+				style={{
+					width: 100 * WIDTH_SCALE,
+					alignItems: 'flex-start',
+					height: 100 * HEIGHT_SCALE,
+					justifyContent: 'center'
+				}}
+				activeOpacity={0.6}
+				onPress={() => this.props.goBack()}
 			>
-				{Icon('ic_left_arrow')}
-			</Text>
+				<Text style={{
+					fontFamily: 'icomoon',
+					color: '#666',
+					fontSize: 40 * HEIGHT_SCALE,
+					marginLeft: 10 * WIDTH_SCALE
+				}}
+				>
+					{Icon('ic_left_arrow')}
+				</Text>
+			</TouchableOpacity>
 		);
 		let customBtn = this.getSpecifyBtn('left');
 		if (!customBtn) {
@@ -93,13 +104,18 @@ class TitleBar extends Component {
 			style,
 			title,
 			titleStyle,
+			back
 		} = this.props;
 
         return (
 			<View style={[styles.container, style]}>
-				<View style={styles.leftBtn}>
-					{this.renderLeftBtn()}
-				</View>
+				{
+					back ?
+						<View style={styles.leftBtn}>
+							{this.renderLeftBtn()}
+						</View>
+						: null
+				}
 
 				<Text style={[styles.title, titleStyle]}>{title}</Text>
 
@@ -116,11 +132,14 @@ const styles = StyleSheet.create({
 		position: 'relative',
 		top: 0,
 		width: WINDOW_WIDTH,
+		backgroundColor: '#fff',
 		// height: beforeLollipop ? 90 * HEIGHT_SCALE : 130 * HEIGHT_SCALE,
 		height: 100 * HEIGHT_SCALE,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: '#fff'
+		borderBottomWidth: StyleSheet.hairlineWidth,
+		borderBottomColor: '#c4c4c4',
+		elevation: 2
 	},
 	title: {
 		fontSize: 36 * HEIGHT_SCALE,
@@ -128,7 +147,8 @@ const styles = StyleSheet.create({
 	},
 	leftBtn: {
 		position: 'absolute',
-		left: 20 * WIDTH_SCALE
+		left: 20 * WIDTH_SCALE,
+		justifyContent: 'center'
 	},
 	rightBtn: {
 		position: 'absolute',
