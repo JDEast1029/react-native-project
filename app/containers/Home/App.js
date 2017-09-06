@@ -18,7 +18,7 @@ class App extends React.Component {
         return (
             <View>
                 <Text>主页{params.name}</Text>
-                <Button onPress={() => navigate('TabNav', {name: 'east'})} title="go Tab"/>
+                 <Button onPress={() => navigate('TabNav', {name: 'east'})} title="go Tab"/> 
             </View>
         )
     }

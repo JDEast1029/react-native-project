@@ -10,7 +10,7 @@ import {
 
 import {Provider} from 'react-redux';
 import store from './app/store/CreateStore';
-import APP from './app/App'
+import Root from './app/Root'
 
 export default class destiny_app extends Component {
 
@@ -20,9 +20,7 @@ export default class destiny_app extends Component {
 
     render() {
         return (
-            <Provider store={store}>
-                <APP/>
-            </Provider>
+            <Root />
         );
     }
 }
