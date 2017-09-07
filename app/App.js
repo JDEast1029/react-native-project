@@ -1,37 +1,44 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {addNavigationHelpers} from 'react-navigation';
+import {addNavigationHelpers, NavigationActions} from 'react-navigation';
 import {Text, BackHandler} from 'react-native';
-import AppNavigator from './AppNavigator';
+import { Toast } from 'antd-mobile';
+import AppNavigator from './router/routes';
+
+/**
+ * ----------  Tip  ------------
+ * 官方文档说createNavigationContainer可以用来监听android的返回键，部分源码：
+ *  this.subs = BackAndroid.addEventListener('backPress', () =>
+ *		this.dispatch(NavigationActions.back())
+ *	);
+ * BackAndroid是其自定义的对象，并不能监听android的物理返回键
+ * 现用如下方式进行监听
+ */
 
 class App extends React.Component {
-	componentWillMount(){
-		BackHandler.addEventListener('hardwareBackPress', this._onBackAndroid );
+
+	componentDidMount() {
+		BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
 	}
 
-
-	componentWillUnmount(){
-		BackHandler.addEventListener('hardwareBackPress', this._onBackAndroid);
+	componentWillUnmount() {
+		BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
 	}
 
-	_onBackAndroid=()=>{
-		if (this.props.nav.routes && this.props.nav.routes.length > 1) {
-			let routes = [...this.props.nav.routes];
-			routes.pop();
-			this.props.dispatch({type: 'ANDROID_BACK'});
-			return true;
-		} else if (this.props.nav.routes && this.props.nav.routes.length === 1) {
-
+	onBackPress = () => {
+		const { dispatch, nav } = this.props;
+		if (nav.index === 0) {
 			let now = new Date().getTime();
 
-			if(now - this.lastBackPressed < 2500) {
+			if(now - this.lastBackPressed < 3000) {
 				return false;
 			}
 			this.lastBackPressed = now;
-			console.log('再点击一次退出应用');
+			Toast.info('再点击一次退出应用', 3);
 			return true;
 		}
-		return false;
+		dispatch(NavigationActions.back());
+		return true;
 	};
 
 	render() {

@@ -1,22 +1,9 @@
+/**
+ * ---------  Tip  -----------
+ * getActionForPathAndParams()参数为空时，默认去routerConfig中的第一个路由
+ */
 import {TabNavigator, NavigationActions} from "react-navigation"
-import AppNavigator from '../AppNavigator.js';
-
-const defaultStateAction = AppNavigator.router.getStateForAction;
-AppNavigator.router.getStateForAction = (action,state) => {
-	/**
-	 * 处理android物理返回键
-	 */
-	if(state && action.type === 'ANDROID_BACK' && state.routes.length > 1) {
-		const routes = [...state.routes];
-		routes.pop();
-		return {
-			...state,
-			routes: routes,
-			index: routes.length - 1,
-		};
-	}
-	return defaultStateAction(action,state);
-};
+import AppNavigator from '../router/routes.js';
 
 const initialState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams());
 

@@ -70,7 +70,8 @@ const TabNav = TabNavigator({
 }, {
 	tabBarOptions: {
 		activeTintColor: '#e91e63'
-	}
+	},
+	initialRouteName: 'Notifications'//初始显示的route
 });
 
 export default TabNav;
