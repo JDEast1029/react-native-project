@@ -23,11 +23,11 @@ const AppNavigator = StackNavigator(
                 headerTitle: 'sfasd'
             })
         },
-        Home: { 
+        Home: {
             screen: Home,
             navigationOptions: ({ navigation, screenProps }) => ({
                 title: `${navigation.state.params.name}'s Profile'`,
-            }),        
+            }),
         },
         TabNav: {
             screen: TabNav,
