@@ -1,5 +1,5 @@
 # react-native-project
-## 引入antd-mobile
+#### 引入antd-mobile
 ```text
 1.npm install react-dom --save
 2.npm install antd-mobile --save
@@ -10,7 +10,7 @@
   "presets": ["react-native"]
 }
 ```
-## 初始化修改react-navigation 中的addNavigationHelper文件
+#### 初始化修改react-navigation 中的addNavigationHelper文件
 ```text
 export default function<S: *>(navigation: NavigationProp<S, NavigationAction>) {
 	// 添加点击判断
