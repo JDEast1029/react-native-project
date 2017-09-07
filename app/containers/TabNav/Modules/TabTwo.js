@@ -34,7 +34,15 @@ class TabTwo extends React.Component {
 		const backAction = NavigationActions.back({
 			key: 'Home'
 		});
-		return (<Button onPress={() => this.props.navigation.goBack(getKeyForRouteName('Home', this.props.nav.routes))} title="Go back home"/>);
+		return (
+			<Button
+				onPress={() =>
+					//goBack(key)中的key值是目标页面的前一个页面的key值
+					this.props.navigation.goBack(getKeyForRouteName('TabNav', this.props.nav.routes))
+				}
+				title="Go back home"
+			/>
+		);
 	}
 }
 

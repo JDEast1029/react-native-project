@@ -14,10 +14,11 @@ class App extends React.Component {
 
     render() {
         const {navigate, dispatch} = this.props.navigation;
-		const loginAction = NavigationActions.navigate({
-			routeName: 'Home',
-			params: {},
-			action: NavigationActions.navigate({ routeName: 'Home', params: {name: 'east'}})
+		const loginAction = NavigationActions.reset({
+			index: 0,
+			actions: [
+				NavigationActions.navigate({ routeName: 'Home', params: {name: 'east'}})
+			]
 		});
 
         return (

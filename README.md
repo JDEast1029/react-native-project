@@ -1,5 +1,5 @@
 # react-native-project
-## 引入antd-mobile
+#### 引入antd-mobile
 ```text
 1.npm install react-dom --save
 2.npm install antd-mobile --save
@@ -10,7 +10,7 @@
   "presets": ["react-native"]
 }
 ```
-## 初始化修改react-navigation 中的addNavigationHelper文件
+#### 初始化修改react-navigation 中的addNavigationHelper文件
 ```text
 export default function<S: *>(navigation: NavigationProp<S, NavigationAction>) {
 	// 添加点击判断
@@ -59,4 +59,8 @@ export default function<S: *>(navigation: NavigationProp<S, NavigationAction>) {
 			),
 	};
 }
+```
+####使用navigation.goBack注意
+```text
+跨页面回退时，注意goBack(key)中的key值是目标页面的前一个页面的key值
 ```
