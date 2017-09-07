@@ -24,7 +24,9 @@ class App extends React.Component {
         return (
             <View>
                 <Text>登录</Text>
-                <Button onPress={() => dispatch(loginAction)} title="go home"/>
+                <Button onPress={() => {
+                	dispatch(loginAction)
+				}} title="go home"/>
             </View>
         )
     }
