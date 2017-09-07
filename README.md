@@ -12,6 +12,7 @@
 ```
 #### 初始化修改react-navigation 中的addNavigationHelper文件
 ```text
+//解决快速点击会导致多次跳转的问题
 export default function<S: *>(navigation: NavigationProp<S, NavigationAction>) {
 	// 添加点击判断
 	let debounce = true;
