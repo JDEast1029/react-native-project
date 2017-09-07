@@ -1,5 +1,5 @@
 # react-native-project
-##引入antd-mobile
+## 引入antd-mobile
 ```text
 1.npm install react-dom --save
 2.npm install antd-mobile --save
@@ -8,5 +8,55 @@
 {
   "plugins": [["import", { "libraryName": "antd-mobile" }]],
   "presets": ["react-native"]
+}
+```
+## 初始化修改react-navigation 中的addNavigationHelper文件
+```text
+export default function<S: *>(navigation: NavigationProp<S, NavigationAction>) {
+	// 添加点击判断
+	let debounce = true;
+	return {
+		...navigation,
+		goBack: (key?: ?string): boolean =>
+			navigation.dispatch(
+				NavigationActions.back({
+					key: key === undefined ? navigation.state.key : key,
+				}),
+			),
+		navigate: (routeName: string,
+				   params?: NavigationParams,
+				   action?: NavigationAction,): boolean => {
+			if (debounce) {
+				debounce = false;
+				navigation.dispatch(
+					NavigationActions.navigate({
+						routeName,
+						params,
+						action,
+					}),
+				);
+				setTimeout(
+					() => {
+						debounce = true;
+					},
+					500,
+				);
+				return true;
+			}
+			return false;
+		},
+		/**
+		 * For updating current route params. For example the nav bar title and
+		 * buttons are based on the route params.
+		 * This means `setParams` can be used to update nav bar for example.
+		 */
+		setParams: (params: NavigationParams): boolean =>
+			navigation.dispatch(
+				NavigationActions.setParams({
+					params,
+					key: navigation.state.key,
+				}),
+			),
+	};
 }
 ```
