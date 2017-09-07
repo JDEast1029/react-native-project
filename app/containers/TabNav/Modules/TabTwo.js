@@ -1,6 +1,10 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {View, Text, Button, Image, StyleSheet} from 'react-native';
 import { NavigationActions } from "react-navigation";
+
+//utils
+import { getKeyForRouteName } from '../../../common/utils/navigatorUtils';
 
 class TabTwo extends React.Component {
 	static navigationOptions = {
@@ -30,7 +34,7 @@ class TabTwo extends React.Component {
 		const backAction = NavigationActions.back({
 			key: 'Home'
 		});
-		return (<Button onPress={() => this.props.navigation.dispatch(resetAction)} title="Go back home"/>);
+		return (<Button onPress={() => this.props.navigation.goBack(getKeyForRouteName('Home', this.props.nav.routes))} title="Go back home"/>);
 	}
 }
 
@@ -41,4 +45,8 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default TabTwo;
+const mapStateToProps = (state) => ({
+	nav: state.navReducer
+});
+
+export default connect(mapStateToProps)(TabTwo);
