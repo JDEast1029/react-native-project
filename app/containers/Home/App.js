@@ -18,7 +18,7 @@ class App extends React.Component {
 
         return (
 			<View>
-				<TitleBar title="主页" goBack={() => goBack()}>
+				<TitleBar title="主页" onLeftBtnClick={() => goBack()}>
 
 				</TitleBar>
 				<Text>主页{params.name}</Text>
