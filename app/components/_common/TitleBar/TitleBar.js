@@ -71,7 +71,7 @@ class TitleBar extends Component {
 					marginLeft: 10 * WIDTH_SCALE
 				}}
 				>
-					{Icon('ic_left_arrow')}
+					{Icon('ic-left-arrow')}
 				</Text>
 			</TouchableOpacity>
 		);
