@@ -17,7 +17,7 @@ class App extends React.Component {
 		const loginAction = NavigationActions.reset({
 			index: 0,
 			actions: [
-				NavigationActions.navigate({ routeName: 'Home', params: {name: 'east'}})
+				NavigationActions.navigate({ routeName: 'TabNav', params: {name: 'east'}})
 			]
 		});
 
