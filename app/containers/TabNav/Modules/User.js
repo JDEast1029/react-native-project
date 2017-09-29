@@ -27,7 +27,7 @@ class User extends React.Component {
 		return (
 			<View>
 				<Text>用户中心</Text>
-				<Button text={<Text>asdfas</Text>} />
+				<Button content='BUTTON' />
 			</View>
 		);
 	}
