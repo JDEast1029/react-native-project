@@ -61,7 +61,12 @@ export default function<S: *>(navigation: NavigationProp<S, NavigationAction>) {
 	};
 }
 ```
-####使用navigation.goBack注意
+#### 使用navigation.goBack注意
 ```text
-跨页面回退时，注意goBack(key)中的key值是目标页面的前一个页面的key值
+  跨页面回退时，注意goBack(key)中的key值是目标页面的前一个页面的key值
+```
+#### 图标引入方式说明
+```text
+  放弃ttf字体库的方式，1.ttf文件不能热更新。2.更换ttf文件比较麻烦。
+  使用svg注意，不要打印svg路径，否则js线程会卡住
 ```
