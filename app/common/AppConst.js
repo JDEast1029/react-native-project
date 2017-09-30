@@ -11,7 +11,7 @@ export const WIDTH_SCALE = Dimensions.get('window').width / 750;
 export const HEIGHT_SCALE = Dimensions.get('window').height / 1334;
 
 export const APP_BG_COLOR = '#F5F5F9';
-export const TEXT_BG_COLOR = '#FFFFFF';
+export const WHITE_COLOR = '#FFFFFF';
 export const TEXT_COLOR = '#333';
 export const TEXT_LIGHT_COLOR = '#666';
 export const DIVIDER_COLOR = '#C4C4C4';

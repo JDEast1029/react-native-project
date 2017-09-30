@@ -11,6 +11,7 @@ import {
 	Dimensions,
 } from 'react-native';
 import Icon from '../../../common/icon/iconFont';
+import Svg from '../../../components/_common/Svg/Svg'
 import styles from './Styles';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
@@ -64,15 +65,11 @@ class TitleBar extends Component {
 				activeOpacity={0.6}
 				onPress={() => this.props.onLeftBtnClick()}
 			>
-				<Text style={{
-					fontFamily: 'icomoon',
-					color: '#666',
-					fontSize: 40 * HEIGHT_SCALE,
-					marginLeft: 10 * WIDTH_SCALE
-				}}
-				>
-					{Icon('ic-left-arrow')}
-				</Text>
+				<Svg
+					icon="ic-left-arrow"
+					size={40 * WIDTH_SCALE}
+					color="#333"
+				/>
 			</TouchableOpacity>
 		);
 		let customBtn = this.getSpecifyBtn('left');
