@@ -14,7 +14,7 @@ const TabNav = TabNavigator({
 		screen: User
 	}
 }, {
-	lazy: true,                            //只初始化当前页面，其他页面不会初始化
+	lazy: true,                            //懒加载，只初始化当前页面，其他页面不会初始化
 	tabBarOptions: {
 		showIcon:true,                     //显示图标
 		backBehavior: 'none',               //按 back 键是否跳转到第一个Tab(首页)， none 为不跳转
@@ -33,7 +33,8 @@ const TabNav = TabNavigator({
 			marginBottom: -10 * HEIGHT_SCALE
 		},
 		indicatorStyle: {
-			backgroundColor: 'transparent'
+			backgroundColor: 'transparent',
+			height: 0
 		}
 	},
 	tabBarPosition:'bottom',
