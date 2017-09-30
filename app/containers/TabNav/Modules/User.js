@@ -4,22 +4,19 @@ import {View, Text, Image, StyleSheet} from 'react-native';
 import { NavigationActions } from "react-navigation";
 import { Toast } from 'antd-mobile';
 import { HEIGHT_SCALE, WIDTH_SCALE } from '../../../common/AppConst';
-import Icon from '../../../common/icon/iconFont';
+import Svg from '../../../components/_common/Svg/Svg'
 import Button from '../../../components/_common/Button/Button';
-
-//utils
-import { getKeyForRouteName } from '../../../common/utils/navigatorUtils';
 
 class User extends React.Component {
 	static navigationOptions = {
 		tabBarLabel: '我',
-		tabBarIcon: ({tintColor}) => (<Text style={{
-			fontFamily: 'icomoon',
-			color: tintColor,
-			fontSize: 40 * HEIGHT_SCALE
-		}}>
-			{Icon('ic-tab-user')}
-		</Text>),
+		tabBarIcon: ({tintColor}) => (
+			<Svg
+				icon="ic-tab-user"
+				size={40 * WIDTH_SCALE}
+				color={tintColor}
+			/>
+		),
 	};
 
 	render() {

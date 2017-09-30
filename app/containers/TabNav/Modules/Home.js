@@ -10,15 +10,13 @@ class Home extends React.Component {
 		tabBarLabel: '主页',
 		// Note: By default the icon is only shown on iOS. Search the showIcon option
 		// below.
-		tabBarIcon: ({tintColor, focused}) => {
-			return (
-				<Svg
-					icon="ic-tab-home"
-					size={40 * WIDTH_SCALE}
-					color={tintColor}
-				/>
-			)
-		},
+		tabBarIcon: ({tintColor, focused}) => (
+			<Svg
+				icon="ic-tab-home"
+				size={40 * WIDTH_SCALE}
+				color={tintColor}
+			/>
+		),
 	};
 
 	render() {
@@ -29,8 +27,6 @@ class Home extends React.Component {
 		);
 	}
 }
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});
 
 export default Home;
