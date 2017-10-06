@@ -2,11 +2,12 @@ import {AsyncStorage} from 'react-native';
 import {compose, applyMiddleware, createStore} from 'redux';
 import {createLogger} from 'redux-logger';
 import {persistStore, autoRehydrate} from'redux-persist';
+import fetcher from '../middleware/fetcher';
 import rootReducer from '../reducers/rootReducer';
 
 function configureStore(initialState) {
 	const logger = createLogger();
-	const middleware = [];
+	const middleware = [fetcher];
 
 	if (__DEV__) {
 		middleware.push(logger);

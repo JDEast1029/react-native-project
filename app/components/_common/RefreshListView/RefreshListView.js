@@ -131,7 +131,7 @@ class RefreshListView  extends Component {
 			<View style={styles.emptyContainer}>
 				<Svg
 					icon="ic-empty"
-					size={350 * WIDTH_SCALE}
+					size={320 * WIDTH_SCALE}
 					color={GRAY_COLOR}
 				/>
 				<Text style={styles.emptyText}>暂无数据</Text>
@@ -140,7 +140,9 @@ class RefreshListView  extends Component {
 	};
 
 	render() {
-		if (this.props.data.length <= 0) {
+		const { data, isParentLoading } = this.props;
+
+		if (data.length <= 0 && !isParentLoading) {
 			return this.renderEmpty();
 		}
 
@@ -197,6 +199,7 @@ const styles = StyleSheet.create({
 RefreshListView .propTypes = {
 	data: PropTypes.array,
 	refreshState: PropTypes.number,
+	isParentLoading: PropTypes.bool,
 	footerContainerStyle: PropTypes.object,
 	footerTextStyle: PropTypes.object,
 	onHeaderRefresh: PropTypes.func,

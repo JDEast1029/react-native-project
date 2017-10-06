@@ -1,8 +1,10 @@
 /**
  * 网络请求接口
  */
-const API = {
+import homeApi from './api/home';
 
+const API = {
+	...homeApi
 };
 
 export default API;

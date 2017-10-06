@@ -2,12 +2,11 @@
  * 网络请求Actions
  */
 
-export default request = (type, params, data, onSuccess, onFailed) => {
+export const request = ({type, params, onSuccess, onFailed}) => {
 	return {
 		busyName: type,
-		params,             //请求配置参数
-		data,               //请求数据
+		params,             //请求参数
 		onSuccess,
 		onFailed
 	}
-}
+};

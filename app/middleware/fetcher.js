@@ -12,20 +12,24 @@ export const API_VERSION = '1.0';
 export const APP_SERVER = __DEV__ ? 'http://api.md.weiyian.com/' : 'http://api.weiyianmd.com/';
 
 const fetcher = (store) => (next) => (action) => {
-	let {busyName, params, data, onSuccess, onFailed} = action;
+	let {busyName, params, onSuccess, onFailed} = action;
+
 	let formData = new FormData();
 
 	if (!API[busyName]) {
-		Toast.info('请求地址无效', 1.5);
 		return next(action);
 	}
 
 	let url = APP_SERVER + API[busyName];//请求的绝对地址
 
-	for (let key in data) {
-		if (!!params[key]) {
-			formData.append(key, data[key])
+	for (let key in params) {
+		if (key !== 'pageLoading') {
+			formData.append(key, params[key])
 		}
+	}
+
+	if (formData._parts.length === 0) {
+		formData.append('okHttpError', '-1')
 	}
 
 	//开发模式下打印url
@@ -36,7 +40,8 @@ const fetcher = (store) => (next) => (action) => {
 	//loading
 	if (!!params.pageLoading) {
 		store.dispatch({
-			type: busyName + '_LOADING'
+			type: busyName + '_LOADING',
+			code: 1,
 		});
 	} else {
 		Toast.loading(null, 0)
@@ -56,7 +61,7 @@ const fetcher = (store) => (next) => (action) => {
 			if (err.code !== -1) {
 				store.dispatch({
 					type: busyName + '_ERROR',
-					error: err.code,
+					code: err.code,
 					msg: err.msg
 				});
 			} else {
@@ -87,12 +92,12 @@ const post = (url, body) => {
 			} else {
 				res.status
 					? resolve(res.data)
-					: reject({msg: res, code: 'error'});
+					: reject({msg: res, code: 3});
 			}
 		}).catch((err) => {
 			reject({
 				msg: "网络错误",
-				code: 404
+				code: 2
 			});
 		})
 	})
