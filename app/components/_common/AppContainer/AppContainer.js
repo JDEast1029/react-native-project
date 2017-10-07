@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 
-import Svg from '../../../components/_common/Svg/Svg';
+import Svg from '../Svg/Svg';
+import TitleBar from '../TitleBar/TitleBar';
 import { HEIGHT_SCALE, WIDTH_SCALE, GRAY_COLOR, MAIN_COLOR } from '../../../common/AppConst';
 //样式
 import styles from './AppContainerStyle';
@@ -61,8 +62,17 @@ class AppContainer extends Component {
 	}
 
 	render() {
+		const {
+			titleBarConfig={}
+		} = this.props;
+
 		return (
 			<View style={[styles.container, this.props.style]}>
+				<TitleBar
+					title={titleBarConfig.title}
+					onLeftBtnClick={titleBarConfig.onLeftBtnClick}
+					back={titleBarConfig.back}
+				/>
 				{this.renderPage()}
 			</View>
 		)
