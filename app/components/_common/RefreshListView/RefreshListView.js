@@ -148,6 +148,7 @@ class RefreshListView  extends Component {
 
 		return (
 			<FlatList
+				onEndReachedThreshold={0.1}                                           //注意此参数是一个比值而非像素单位。比如，0.5表示距离内容最底部的距离为当前列表可见长度的一半时触发。
 				onEndReached={this.onEndReached}
 				// onRefresh={this.onHeaderRefresh}                                         使用FlatList暴露的下拉属性无法改变指示器的颜色，
 				// refreshing={this.props.refreshState === RefreshState.HeaderRefreshing}   现在使用ScrollView的refreshControl属性
