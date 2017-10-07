@@ -80,7 +80,6 @@ class App extends React.Component {
 
 				<RefreshListView
 					data={listReducer.list}
-					isParentLoading={listReducer.pageStatus.code === 1}
 					keyExtractor={this.keyExtractor}           //来替代item中的key
 					renderItem={this.renderItem}
 					onHeaderRefresh={this.fetchData}

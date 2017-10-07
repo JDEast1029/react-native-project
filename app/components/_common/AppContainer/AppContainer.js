@@ -29,7 +29,7 @@ class AppContainer extends Component {
 	renderPage() {
 		const { pageStatus } = this.props;
 
-		if (pageStatus.isFetched) return this.props.children;
+		if (pageStatus.isFetched) return this.renderIdlePage();
 
 		switch (pageStatus.code) {
 			case PageStatus.NET_ERROR:
@@ -49,8 +49,25 @@ class AppContainer extends Component {
 					<PageLoading />
 				);
 			default:
-				return (this.props.children)
+				return this.renderIdlePage();
 		}
+	}
+
+	/**
+	 * 渲染业务页面，并传递当前AppContainer 是否正在加载
+	 * @returns {*}
+	 */
+	renderIdlePage() {
+		const { pageStatus, children } = this.props;
+		return React.Children.map(children, (child) => {
+			if (!child) return;
+
+			return (
+				React.cloneElement(child, {
+					children: child.props.children,
+					isParentLoading: pageStatus.code === 1
+				}))
+		})
 	}
 
 	render() {

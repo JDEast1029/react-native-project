@@ -75,6 +75,7 @@ const fetcher = (store) => (next) => (action) => {
 					break;
 				case 2:
 				case 3:
+					//2、3为网络和系统错误，需要更新页面
 					next({
 						type: busyName + '_ERROR',
 						code: err.code,
