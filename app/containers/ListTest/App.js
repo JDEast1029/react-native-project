@@ -18,27 +18,34 @@ class App extends React.Component {
 		super(props);
 		this.state = {
 			data: []
-		}
+		};
+
+		this.handleRefresh = this.handleRefresh.bind(this);
+	}
+
+	componentWillMount() {
+		this.props.actions.loading({type: Types.LIST_TEST_POST});
 	}
 
 	componentDidMount() {
-		InteractionManager.runAfterInteractions(() => {
-			// ...耗时较长的同步的任务...
-			this.fetchData();
-
-		});
+		this.fetchData();
 	}
 
-	fetchData = () => {
+	fetchData = (refreshState = 0) => {
 		this.props.actions.request(
 			{
 				type: Types.LIST_TEST_POST,
-				params: {pageLoading: true},
+				params: {},
+				refreshState: refreshState,
 				onSuccess: (res) => {},
 				onFailed: (err) => {}
 			}
 		)
 	};
+
+	handleRefresh() {
+		this.fetchData()
+	}
 
 	/**
 	 * keyExtractor属性指定使用id作为列表每一项的key。
@@ -51,7 +58,7 @@ class App extends React.Component {
 
 	renderItem = ({item}) => {
 		return (
-			<View style={{height: 50}}><Text>{item.name}</Text></View>
+			<View style={{height: 50, backgroundColor: '#ffffff', borderBottomWidth: StyleSheet.hairlineWidth}}><Text>{item.name}</Text></View>
 		)
 	};
 
@@ -62,8 +69,8 @@ class App extends React.Component {
 		return (
 			<AppContainer
 				style={{flex: 1}}
-				pageStatus={listReducer.pageStatus.code}
-				onRefresh={this.fetchData}
+				pageStatus={listReducer.pageStatus}
+				onRefresh={this.handleRefresh}
 				titleBarConfig={{
 					title: '列表',
 					back: true,
@@ -76,9 +83,12 @@ class App extends React.Component {
 					isParentLoading={listReducer.pageStatus.code === 1}
 					keyExtractor={this.keyExtractor}           //来替代item中的key
 					renderItem={this.renderItem}
-					getItemLayout={(data,index)=>(
-						{length: 50, offset: (50) * index, index}
-					)}
+					// getItemLayout={(data,index)=>(
+					// 	{length: 50, offset: (50) * index, index}
+					// )}
+					onHeaderRefresh={this.fetchData}
+					onFooterRefresh={this.fetchData}
+					refreshState={listReducer.status}
 				/>
 			</AppContainer>
 		);
