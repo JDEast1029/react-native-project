@@ -28,7 +28,10 @@ class AppContainer extends Component {
 
 	renderPage() {
 		const { pageStatus } = this.props;
-		switch (pageStatus) {
+
+		if (pageStatus.isFetched) return this.props.children;
+
+		switch (pageStatus.code) {
 			case PageStatus.NET_ERROR:
 				return (
 					<NetError
