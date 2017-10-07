@@ -2,16 +2,14 @@
  * App 页面顶层组件
  */
 import React, { Component } from 'react';
-import {
-	View,
-	Text,
-	TouchableWithoutFeedback
-} from 'react-native';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
 
-import Svg from '../Svg/Svg';
+//组件
+import NetError from './PageStatus/NetError';
+import SystemError from './PageStatus/SystemError';
+import PageLoading from './PageStatus/PageLoading';
 import TitleBar from '../TitleBar/TitleBar';
-import { HEIGHT_SCALE, WIDTH_SCALE, GRAY_COLOR, MAIN_COLOR } from '../../../common/AppConst';
 //样式
 import styles from './AppContainerStyle';
 
@@ -23,7 +21,7 @@ const PageStatus = {
 	IDLE: 0,
 	PAGE_LOADING: 1,
 	NET_ERROR: 2,
-	SERVER_ERROR: 3
+	SYSTEM_ERROR: 3
 };
 
 class AppContainer extends Component {
@@ -33,38 +31,19 @@ class AppContainer extends Component {
 		switch (pageStatus) {
 			case PageStatus.NET_ERROR:
 				return (
-					<TouchableWithoutFeedback
-						onPress={this.props.onRefresh}
-					>
-						<View style={styles.errorContainer}>
-							<Svg
-								icon="ic-404-error"
-								size={280 * WIDTH_SCALE}
-								color={GRAY_COLOR}
-							/>
-							<Text style={styles.errorText}>网络异常，请点击刷新</Text>
-						</View>
-					</TouchableWithoutFeedback>
+					<NetError
+						onRefresh={this.props.onRefresh}
+					/>
 				);
-			case PageStatus.SERVER_ERROR:
+			case PageStatus.SYSTEM_ERROR:
 				return (
-					<TouchableWithoutFeedback
-						onPress={this.props.onRefresh}
-					>
-						<View style={styles.errorContainer}>
-							<Svg
-								icon="ic-error-page"
-								size={350 * WIDTH_SCALE}
-							/>
-							<Text style={styles.errorText}>系统异常，请点击刷新</Text>
-						</View>
-					</TouchableWithoutFeedback>
+					<SystemError
+						onRefresh={this.props.onRefresh}
+					/>
 				);
 			case PageStatus.PAGE_LOADING:
 				return (
-					<View>
-
-					</View>
+					<PageLoading />
 				);
 			default:
 				return (this.props.children)
