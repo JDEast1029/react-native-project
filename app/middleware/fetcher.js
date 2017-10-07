@@ -13,9 +13,17 @@ export const TOKEN = '853e745705cf40359434e4325178324d';
 export const APP_SERVER = __DEV__ ? 'http://localhost:8081' : 'http://api.weiyianmd.com/';
 
 const fetcher = (store) => (next) => (action) => {
-	let {busyName, params, onSuccess, onFailed, pageLoading, refreshState} = action;
+	let {busyName, params, onSuccess, onFailed, refreshState} = action;
 
 	let formData = new FormData();
+
+	//整个页面的Loading
+	if (busyName === 'PAGE_LOADING') {
+		return next({
+			type: busyName,
+			code: 1,
+		})
+	}
 
 	if (!API[busyName]) {
 		return next(action);
@@ -33,19 +41,12 @@ const fetcher = (store) => (next) => (action) => {
 		console.log(url)
 	}
 
-	let result;
 	//loading
-	if (!!pageLoading) {
-		return next({
-			type: busyName + '_PAGE_LOADING',
-			code: 1,
-		})
-	} else if (params.loading) {
+	if (params.loading) {
 		Toast.loading(null, 0)
 	} else {
 		next({
-			type: busyName + '_ON',
-			refreshState: refreshState || 0
+			type: busyName + '_ON'
 		});
 	}
 

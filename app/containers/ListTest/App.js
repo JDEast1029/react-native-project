@@ -24,7 +24,7 @@ class App extends React.Component {
 	}
 
 	componentWillMount() {
-		this.props.actions.loading({type: Types.LIST_TEST_POST});
+		this.props.actions.loading({type: Types.PAGE_LOADING});
 	}
 
 	componentDidMount() {
@@ -83,9 +83,6 @@ class App extends React.Component {
 					isParentLoading={listReducer.pageStatus.code === 1}
 					keyExtractor={this.keyExtractor}           //来替代item中的key
 					renderItem={this.renderItem}
-					// getItemLayout={(data,index)=>(
-					// 	{length: 50, offset: (50) * index, index}
-					// )}
 					onHeaderRefresh={this.fetchData}
 					onFooterRefresh={this.fetchData}
 					refreshState={listReducer.status}

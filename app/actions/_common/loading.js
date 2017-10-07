@@ -3,7 +3,6 @@
  */
 export const loading = ({type}) => {
 	return {
-		busyName: type,
-		pageLoading: true
+		busyName: type
 	}
 };

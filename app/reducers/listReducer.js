@@ -16,7 +16,7 @@ const initialState = {
 
 const listReducer = (state = initialState, action) => {
 	switch(action.type) {
-		case Types.LIST_TEST_POST + '_PAGE_LOADING':
+		case Types.PAGE_LOADING:
 			state = {
 				...state,
 				pageStatus: {
@@ -32,7 +32,7 @@ const listReducer = (state = initialState, action) => {
 					...state.pageStatus,
 					code: 1,
 				},
-				status: action.refreshState
+				status: 2
 			};
 			return state;
 		case Types.LIST_TEST_POST + '_SUCCESS':
