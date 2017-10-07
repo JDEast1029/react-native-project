@@ -40,4 +40,5 @@ function shallowEqualImmutable(objA, objB) {
 
 export default function pureRenderDecorator(Component) {
     Component.prototype.shouldComponentUpdate = shouldComponentUpdate;
+    return Component;
 }

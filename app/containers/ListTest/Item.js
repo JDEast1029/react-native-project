@@ -10,7 +10,6 @@ import {
 
 class Item extends PureComponent {
 	render() {
-		console.log(this.props.data.name)
 		return (
 			<View style={{height: 50, backgroundColor: '#ffffff', borderBottomWidth: StyleSheet.hairlineWidth}}><Text>{this.props.data.name}</Text></View>
 		)
