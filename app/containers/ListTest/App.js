@@ -11,6 +11,7 @@ import * as Types from '../../contants/actions/list';
 //业务组件、常量
 import AppContainer from '../../components/_common/AppContainer/AppContainer';
 import RefreshListView  from '../../components/_common/RefreshListView/RefreshListView';
+import Item from './Item';
 import {HEIGHT_SCALE, WIDTH_SCALE} from '../../common/AppConst';
 
 class App extends React.Component {
@@ -58,7 +59,7 @@ class App extends React.Component {
 
 	renderItem = ({item}) => {
 		return (
-			<View style={{height: 50, backgroundColor: '#ffffff', borderBottomWidth: StyleSheet.hairlineWidth}}><Text>{item.name}</Text></View>
+			<Item data={item} />
 		)
 	};
 
