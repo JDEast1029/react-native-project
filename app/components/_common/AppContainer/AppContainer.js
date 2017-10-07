@@ -36,19 +36,29 @@ class AppContainer extends Component {
 					<TouchableWithoutFeedback
 						onPress={this.props.onRefresh}
 					>
-						<View style={styles.error404}>
+						<View style={styles.errorIcon}>
 							<Svg
 								icon="ic-404-error"
 								size={280 * WIDTH_SCALE}
 								color={GRAY_COLOR}
 							/>
-							<Text style={styles.errorText404}>网络异常，请点击刷新</Text>
+							<Text style={styles.errorText}>网络异常，请点击刷新</Text>
 						</View>
 					</TouchableWithoutFeedback>
 				);
 			case PageStatus.SERVER_ERROR:
 				return (
-					<View></View>
+					<TouchableWithoutFeedback
+						onPress={this.props.onRefresh}
+					>
+						<View style={styles.errorIcon}>
+							<Svg
+								icon="ic-error-page"
+								size={350 * WIDTH_SCALE}
+							/>
+							<Text style={styles.errorText}>系统异常，请点击刷新</Text>
+						</View>
+					</TouchableWithoutFeedback>
 				);
 			case PageStatus.PAGE_LOADING:
 				return (

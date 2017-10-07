@@ -10,14 +10,14 @@ const styles = StyleSheet.create({
 		flex: 1
 	},
 
-	error404: {
+	errorIcon: {
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		marginTop: -20 * HEIGHT_SCALE,
+		marginTop: -300 * HEIGHT_SCALE
 	},
 
-	errorText404: {
+	errorText: {
 		color: GRAY_COLOR,
 		fontSize: 32 * WIDTH_SCALE,
 		marginTop: 20 * HEIGHT_SCALE
