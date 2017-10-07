@@ -42,7 +42,7 @@ const listReducer = (state = initialState, action) => {
 				pageStatus: {
 					...state.pageStatus,
 					code: 0,
-					isFetched: true
+					isFetched: true    //页面是否已经请求过，如果为true，则不会显示NetError/SystemError页面
 				},
 				status: 0               //根据数据isEnd判断
 			};
