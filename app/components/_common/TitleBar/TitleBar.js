@@ -24,7 +24,7 @@ const beforeLollipop = Platform.OS === 'android' && Platform.Version < 21;
 class TitleBar extends Component {
 	static propTypes = {
 		title: PropTypes.string,                      //页面标题
-		onLeftBtnClick: PropTypes.func,                       //回退键方法
+		onLeftBtnClick: PropTypes.func,               //回退键方法
 		back: PropTypes.bool,                         //是否显示默认的返回键
 	};
 
