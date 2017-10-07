@@ -1,7 +1,7 @@
 /**
  * 顶部标题栏
  */
-import React, { Component } from 'react';
+import React, { PureComponent, Component } from 'react';
 import PropTypes from 'prop-types';
 import {
 	Text,
@@ -10,7 +10,6 @@ import {
 	Platform,
 	Dimensions,
 } from 'react-native';
-import Icon from '../../../common/icon/iconFont';
 import Svg from '../../../components/_common/Svg/Svg'
 import styles from './Styles';
 
@@ -21,7 +20,7 @@ const HEIGHT_SCALE = WINDOW_HEIGHT / 1334;
 
 const beforeLollipop = Platform.OS === 'android' && Platform.Version < 21;
 
-class TitleBar extends Component {
+class TitleBar extends PureComponent {
 	static propTypes = {
 		title: PropTypes.string,                      //页面标题
 		onLeftBtnClick: PropTypes.func,               //回退键方法
