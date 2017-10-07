@@ -13,7 +13,7 @@ export const TOKEN = '853e745705cf40359434e4325178324d';
 export const APP_SERVER = __DEV__ ? 'http://localhost:8081' : 'http://api.weiyianmd.com/';
 
 const fetcher = (store) => (next) => (action) => {
-	let {busyName, params, onSuccess, onFailed} = action;
+	let {busyName, params, onSuccess, onFailed, pageLoading, refreshState} = action;
 
 	let formData = new FormData();
 
@@ -24,9 +24,7 @@ const fetcher = (store) => (next) => (action) => {
 	let url = APP_SERVER + API[busyName];//请求的绝对地址
 
 	for (let key in params) {
-		if (key !== 'pageLoading') {
-			formData.append(key, params[key])
-		}
+		formData.append(key, params[key])
 	}
 	// formData.append('key', TOKEN);
 
@@ -35,48 +33,61 @@ const fetcher = (store) => (next) => (action) => {
 		console.log(url)
 	}
 
+	let result;
 	//loading
-	if (!!params.pageLoading) {
-		store.dispatch({
-			type: busyName + '_LOADING',
+	if (!!pageLoading) {
+		return next({
+			type: busyName + '_PAGE_LOADING',
 			code: 1,
-		});
+		})
 	} else if (params.loading) {
 		Toast.loading(null, 0)
+	} else {
+		next({
+			type: busyName + '_ON',
+			refreshState: refreshState || 0
+		});
 	}
 
 	post(url, formData)
 		.then((data) => {
 			Toast.hide();
-			store.dispatch({
-				type: busyName + '_SUCCESS',
-				data
-			});
-			onSuccess && onSuccess()
+			onSuccess && onSuccess();
+			if (refreshState === 1) {
+				next({
+					type: busyName + '_REFRESH',
+					data
+				});
+			} else {
+				next({
+					type: busyName + '_SUCCESS',
+					data
+				});
+			}
 		})
 		.catch((err) => {
 			Toast.hide();
+			onFailed && onFailed(err);
 			switch (err.code) {
 				case -1:
 					//TODO 登录失效
 					break;
 				case 2:
 				case 3:
-					store.dispatch({
+					next({
 						type: busyName + '_ERROR',
 						code: err.code,
 						msg: err.msg
 					});
 					break;
 				default:
-					store.dispatch({
+					next({
 						type: busyName + '_ERROR',
 						code: 0
 					});
 					break;
 			}
-			onFailed && onFailed(err);
-		})
+		});
 };
 
 const post = (url, body) => {
