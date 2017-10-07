@@ -10,11 +10,10 @@ const styles = StyleSheet.create({
 		flex: 1
 	},
 
-	errorIcon: {
+	errorContainer: {
 		flex: 1,
-		justifyContent: 'center',
 		alignItems: 'center',
-		marginTop: -300 * HEIGHT_SCALE
+		paddingTop: 200 * HEIGHT_SCALE,
 	},
 
 	errorText: {

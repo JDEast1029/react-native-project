@@ -36,7 +36,7 @@ class AppContainer extends Component {
 					<TouchableWithoutFeedback
 						onPress={this.props.onRefresh}
 					>
-						<View style={styles.errorIcon}>
+						<View style={styles.errorContainer}>
 							<Svg
 								icon="ic-404-error"
 								size={280 * WIDTH_SCALE}
@@ -51,7 +51,7 @@ class AppContainer extends Component {
 					<TouchableWithoutFeedback
 						onPress={this.props.onRefresh}
 					>
-						<View style={styles.errorIcon}>
+						<View style={styles.errorContainer}>
 							<Svg
 								icon="ic-error-page"
 								size={350 * WIDTH_SCALE}
