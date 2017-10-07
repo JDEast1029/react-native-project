@@ -46,7 +46,7 @@ class App extends React.Component {
 	 * @param index
 	 */
 	keyExtractor = (item, index) => {
-		return item.index;
+		return index;
 	};
 
 	renderItem = ({item}) => {
@@ -72,7 +72,7 @@ class App extends React.Component {
 			>
 
 				<RefreshListView
-					data={this.state.data}
+					data={listReducer.list}
 					isParentLoading={listReducer.pageStatus.code === 1}
 					keyExtractor={this.keyExtractor}           //来替代item中的key
 					renderItem={this.renderItem}

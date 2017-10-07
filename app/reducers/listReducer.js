@@ -19,6 +19,15 @@ const listReducer = (state = initState, action) => {
 				}
 			};
 			return state;
+		case Types.LIST_TEST_POST + '_SUCCESS':
+			state = {
+				...state,
+				list: action.data,
+				pageStatus: {
+					code: 0
+				}
+			};
+			return state;
 		case Types.LIST_TEST_POST + '_ERROR':
 			state = {
 				...state,

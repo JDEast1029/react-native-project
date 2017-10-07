@@ -7,9 +7,10 @@ import API from '../contants/API';
 
 // API版本号
 export const API_VERSION = '1.0';
+export const TOKEN = '853e745705cf40359434e4325178324d';
 
 // 服务器地址
-export const APP_SERVER = __DEV__ ? 'http://www.meituan.com' : 'http://api.weiyianmd.com/';
+export const APP_SERVER = __DEV__ ? 'http://localhost:8081' : 'http://api.weiyianmd.com/';
 
 const fetcher = (store) => (next) => (action) => {
 	let {busyName, params, onSuccess, onFailed} = action;
@@ -27,11 +28,7 @@ const fetcher = (store) => (next) => (action) => {
 			formData.append(key, params[key])
 		}
 	}
-
-	if (formData._parts.length === 0) {
-		//防止OKHttp报错
-		formData.append('okHttpError', '-1')
-	}
+	// formData.append('key', TOKEN);
 
 	//开发模式下打印url
 	if (__DEV__) {
@@ -44,7 +41,7 @@ const fetcher = (store) => (next) => (action) => {
 			type: busyName + '_LOADING',
 			code: 1,
 		});
-	} else {
+	} else if (params.loading) {
 		Toast.loading(null, 0)
 	}
 
@@ -72,6 +69,10 @@ const fetcher = (store) => (next) => (action) => {
 					});
 					break;
 				default:
+					store.dispatch({
+						type: busyName + '_ERROR',
+						code: 0
+					});
 					break;
 			}
 			onFailed && onFailed(err);
@@ -79,20 +80,20 @@ const fetcher = (store) => (next) => (action) => {
 };
 
 const post = (url, body) => {
-
 	return new Promise((resolve, reject) => {
 		fetch(url, {
-			method: "POST",
-			headers: {
-				'Content-Type': 'multipart/form-data',
-				'platform': Platform.OS,
-				'version': API_VERSION
+			// method: 'POST',
+			headers:{
+				'Accept': 'application/json',
+				'Content-Type':'application/json',
+				// 'Content-Type': 'multipart/form-data',
+				// 'platform': Platform.OS,
+				// 'version': API_VERSION
 			},
-			body: body
+			// body: body
 		})
-		.then((response) => {
+		.then((response) => response.text()).then((responseText) => {
 			try {
-				let responseText = response.text();
 				const res = JSON.parse(responseText);
 				if (res.status === -1) {
 					reject({
