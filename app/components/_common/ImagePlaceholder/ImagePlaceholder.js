@@ -3,7 +3,7 @@
  * ------  use guide  -------
  * <ImageLoad
   * 	style={{ width: 320, height: 250 }}
-  * 	loadingStyle={{ size: 'large', color: 'gray' }}
+  * 	loadingStyle={{ size: 'small', color: 'gray' }}
   * 	source={{ uri: 'https://oss.ruishan666.com/image/common/agent_bg.png' }}
   * />
  * --------------------------
@@ -18,7 +18,7 @@ class ImageLoad extends PureComponent {
 	};
 
 	static defaultProps = {
-		isShowActivity: true,
+		isShowActivity: false,
 	};
 
 	constructor(props) {
