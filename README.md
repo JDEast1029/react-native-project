@@ -68,5 +68,5 @@ export default function<S: *>(navigation: NavigationProp<S, NavigationAction>) {
 #### 图标引入方式说明
 ```text
 放弃ttf字体库的方式，1.ttf文件不能热更新。2.更换ttf文件比较麻烦。
-使用svg注意，不要打印svg路径，否则js线程会卡住
+使用svg注意，不要打印svg路径，否则js线程会卡住;使用的svg中要带有fill属性
 ```
