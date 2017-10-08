@@ -1,4 +1,36 @@
 {
-  "presets": ["react-native"],
-  "plugins": [["import", { "libraryName": "antd-mobile" }]]
+	"presets": [
+		"react-native"
+	],
+	"plugins": [
+		[
+			"import",
+			{
+				"libraryName": "antd-mobile"
+			}
+		],
+		[
+			"module-resolver",
+			{
+				"root": ["./app"],
+				"extensions": [".js", ".ios.js", ".android.js"],
+				"alias": {
+					"actions"      : "./actions",
+					"common"       : "./common",
+					"components"   : "./components",
+					"actionsType"  : "./contants/actions",
+					"api"          : "./contants/API",
+					"middleware"   : "./middleware",
+					"reducers"     : "./reducers"
+				}
+			}
+		]
+	],
+	"env": {
+		"development": {
+			"plugins": [
+				"transform-react-jsx-source"
+			]
+		}
+	}
 }
