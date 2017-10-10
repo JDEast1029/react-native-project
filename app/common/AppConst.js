@@ -17,3 +17,4 @@ export const TEXT_LIGHT_COLOR = '#666';
 export const DIVIDER_COLOR = '#C4C4C4';
 export const MAIN_COLOR = '#00AEFF';
 export const GRAY_COLOR = "#8a8a8a";
+export const LIGHT_GRAY_COLOR = "#c6c6c6";
