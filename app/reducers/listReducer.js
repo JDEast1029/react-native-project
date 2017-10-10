@@ -31,8 +31,8 @@ const listReducer = (state = initialState, action) => {
 		case Types.LIST_TEST_POST + '_SUCCESS':
 			state = {
 				...state,
-				list: [...state.list, ...action.data],
 				...changePageStatus(state, {code: 0, isFetched: true}),    //isFetched   页面是否已经请求过，如果为true，则不会显示NetError/SystemError页面
+				list: [...state.list, ...action.data],
 				status: 0               //根据数据isEnd判断
 			};
 			return state;
