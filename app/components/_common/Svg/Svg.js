@@ -17,7 +17,7 @@ export default class Svg extends PureComponent {
 		let svgXmlData = svgs[this.props.icon];
 
 		if (!svgXmlData) {
-			let err_msg = `没有"${this.props.icon}"这个icon，请下载最新的icomoo并 npm run build-js`;
+			let err_msg = `没有"${this.props.icon}"这个icon`;
 			throw new Error(err_msg);
 		}
 		return (
