@@ -72,16 +72,21 @@ class AppContainer extends Component {
 
 	render() {
 		const {
-			titleBarConfig={}
+			titleBarConfig={},
+			showTitleBar
 		} = this.props;
 
 		return (
 			<View style={[styles.container, this.props.style]}>
-				<TitleBar
-					title={titleBarConfig.title}
-					onLeftBtnClick={titleBarConfig.onLeftBtnClick}
-					back={titleBarConfig.back}
-				/>
+				{
+					showTitleBar ?
+						<TitleBar
+							title={titleBarConfig.title}
+							onLeftBtnClick={titleBarConfig.onLeftBtnClick}
+							back={titleBarConfig.back}
+						/>
+						: null
+				}
 				{this.renderPage()}
 			</View>
 		)
@@ -92,7 +97,12 @@ AppContainer.PropTypes = {
 	pageStatus: PropTypes.oneOfType([
 		PropTypes.string,
 		PropTypes.number
-	])
+	]),
+	showTitleBar: PropTypes.bool
+};
+
+AppContainer.defaultProps = {
+	showTitleBar: true
 };
 
 export default AppContainer;
