@@ -4,7 +4,7 @@
 
 export const request = ({type, params, refreshState, onSuccess, onFailed}) => {
 	return {
-		busyName: type,
+		type,
 		params,             //请求参数
 		refreshState,
 		onSuccess,

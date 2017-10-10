@@ -1,8 +1,10 @@
 /**
  * 进入页面时显示加载页面
  */
-export const loading = ({type}) => {
+import * as Types from '../../contants/actions/_common/loading';
+
+export const loading = () => {
 	return {
-		busyName: type
+		type: Types.PAGE_LOADING
 	}
 };

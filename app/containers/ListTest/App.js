@@ -25,11 +25,16 @@ class App extends React.Component {
 	}
 
 	componentWillMount() {
-		this.props.actions.loading({type: Types.PAGE_LOADING});
+		this.props.actions.loading();
 	}
 
 	componentDidMount() {
-		this.fetchData();
+		const { listReducer } = this.props;
+		if (listReducer.list && listReducer.list.length > 0) {
+			this.fetchData(1)
+		} else {
+			this.fetchData();
+		}
 	}
 
 	fetchData = (refreshState = 0) => {

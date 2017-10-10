@@ -13,23 +13,23 @@ export const TOKEN = '853e745705cf40359434e4325178324d';
 export const APP_SERVER = __DEV__ ? 'http://localhost:8081' : 'http://api.weiyianmd.com/';
 
 const fetcher = (store) => (next) => (action) => {
-	let {busyName, params, onSuccess, onFailed, refreshState} = action;
+	let {type, params, onSuccess, onFailed, refreshState} = action;
 
 	let formData = new FormData();
 
 	//整个页面的Loading
-	if (busyName === 'PAGE_LOADING') {
+	if (type === 'PAGE_LOADING') {
 		return next({
-			type: busyName,
+			type: type,
 			code: 1,
 		})
 	}
 
-	if (!API[busyName]) {
+	if (!API[type]) {
 		return next(action);
 	}
 
-	let url = APP_SERVER + API[busyName];//请求的绝对地址
+	let url = APP_SERVER + API[type];//请求的绝对地址
 
 	for (let key in params) {
 		formData.append(key, params[key])
@@ -46,7 +46,8 @@ const fetcher = (store) => (next) => (action) => {
 		Toast.loading(null, 0)
 	} else {
 		next({
-			type: busyName + '_ON'
+			type: type + '_ON',
+			refreshState: refreshState
 		});
 	}
 
@@ -56,12 +57,12 @@ const fetcher = (store) => (next) => (action) => {
 			onSuccess && onSuccess();
 			if (refreshState === 1) {
 				next({
-					type: busyName + '_REFRESH',
+					type: type + '_REFRESH',
 					data
 				});
 			} else {
 				next({
-					type: busyName + '_SUCCESS',
+					type: type + '_SUCCESS',
 					data
 				});
 			}
@@ -77,14 +78,15 @@ const fetcher = (store) => (next) => (action) => {
 				case 3:
 					//2、3为网络和系统错误，需要更新页面
 					next({
-						type: busyName + '_ERROR',
+						type: type + '_ERROR',
 						code: err.code,
-						msg: err.msg
+						msg: err.msg,
+						refreshState: refreshState
 					});
 					break;
 				default:
 					next({
-						type: busyName + '_ERROR',
+						type: type + '_ERROR',
 						code: 0
 					});
 					break;

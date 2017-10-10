@@ -2,12 +2,10 @@
  * 列表
  */
 import * as Types from '../contants/actions/list';
+import { initPageStatus, changePageStatus } from './_common/utils';
 
 const initialState = {
-	pageStatus: {
-		code: 1,
-		isFetched: false,
-	},
+	...initPageStatus(),
 	list: [],
 	status: 0,
 	totalCount: 0,
@@ -15,58 +13,47 @@ const initialState = {
 };
 
 const listReducer = (state = initialState, action) => {
+	let pageStatus;
 	switch(action.type) {
 		case Types.PAGE_LOADING:
 			state = {
 				...state,
-				pageStatus: {
-					...state.pageStatus,
-					code: action.code
-				}
+				...changePageStatus(state, {code: action.code})
 			};
 			return state;
-		case Types.LIST_TEST_POST + '_ON':            //上拉加载
+		case Types.LIST_TEST_POST + '_ON':            //上拉加载\刷新
 			state = {
 				...state,
-				pageStatus: {
-					...state.pageStatus,
-					code: 1,
-				},
-				status: 2
+				...changePageStatus(state, {code: 1}),
+				status: action.refreshState || 0
 			};
 			return state;
 		case Types.LIST_TEST_POST + '_SUCCESS':
 			state = {
 				...state,
 				list: [...state.list, ...action.data],
-				pageStatus: {
-					...state.pageStatus,
-					code: 0,
-					isFetched: true    //页面是否已经请求过，如果为true，则不会显示NetError/SystemError页面
-				},
+				...changePageStatus(state, {code: 0, isFetched: true}),    //isFetched   页面是否已经请求过，如果为true，则不会显示NetError/SystemError页面
 				status: 0               //根据数据isEnd判断
 			};
 			return state;
 		case Types.LIST_TEST_POST + '_ERROR':
+			pageStatus = action.refreshState === 1 ? {code: action.code, isFetched: false} : {code: action.code};
 			state = {
 				...state,
-				pageStatus: {
-					...state.pageStatus,
-					code: action.code,
-					msg: action.msg
-				},
+				...changePageStatus(state, pageStatus),
 				status: 4
 			};
 			return state;
 		case Types.LIST_TEST_POST + '_REFRESH':
 			state = {
 				...state,
+				...changePageStatus(state, {code: 0, isFetched: true}),
 				list: action.data,
 				status: 0               //根据数据isEnd判断
 			};
 			return state;
 		default:
-			return initialState;
+			return state;
 	}
 };
 
