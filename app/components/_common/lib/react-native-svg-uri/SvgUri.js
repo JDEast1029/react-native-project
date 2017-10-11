@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types'
 import xmldom from 'xmldom';
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
@@ -270,6 +270,7 @@ class SvgUri extends Component{
 	}
 
 	render () {
+		const { onPress } = this.props;
 		try {
 			if (this.state.svgXmlData == null) {
 				return null;
@@ -284,6 +285,16 @@ class SvgUri extends Component{
 
 			const rootSVG = this.inspectNode(doc.childNodes[0]);
 
+			if (onPress) {
+				return (
+					<TouchableOpacity
+						activeOpacity={0.6}
+						onPress={onPress}
+					>
+						{rootSVG}
+					</TouchableOpacity>
+				)
+			}
 			return(
 				<View style={this.props.style}>
 					{rootSVG}
@@ -303,6 +314,7 @@ SvgUri.propTypes = {
 	svgXmlData: PropTypes.string,
 	source: PropTypes.any,
 	fill: PropTypes.string,
+	onPress: PropTypes.func
 };
 
 export default SvgUri;

@@ -13,6 +13,7 @@ export default class Svg extends PureComponent {
 			color,
 			size,
 			style,
+			onPress
 		} = this.props;
 		let svgXmlData = svgs[this.props.icon];
 
@@ -27,6 +28,7 @@ export default class Svg extends PureComponent {
 				svgXmlData={svgXmlData}
 				fill={color}
 				style={style}
+				onPress={onPress}
 			/>
 		)
 	}
