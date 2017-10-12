@@ -290,6 +290,7 @@ class SvgUri extends Component{
 					<TouchableOpacity
 						activeOpacity={0.6}
 						onPress={onPress}
+						style={this.props.style}
 					>
 						{rootSVG}
 					</TouchableOpacity>
