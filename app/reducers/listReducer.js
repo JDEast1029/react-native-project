@@ -13,7 +13,6 @@ const initialState = {
 };
 
 const listReducer = (state = initialState, action) => {
-	let pageStatus;
 	switch(action.type) {
 		case Types.PAGE_LOADING:
 			state = {
@@ -24,30 +23,30 @@ const listReducer = (state = initialState, action) => {
 		case Types.LIST_TEST_POST + '_ON':            //上拉加载\刷新
 			state = {
 				...state,
-				...changePageStatus(state, {code: 1}),
+				...changePageStatus(state, {code: state.list.length > 0 ? 0 : 1}),
 				status: action.refreshState || 0
 			};
 			return state;
 		case Types.LIST_TEST_POST + '_SUCCESS':
 			state = {
 				...state,
-				...changePageStatus(state, {code: 0, isFetched: true}),    //isFetched   页面是否已经请求过，如果为true，则不会显示NetError/SystemError页面
+				...changePageStatus(state, {code: 0}),
 				list: [...state.list, ...action.data],
 				status: 0               //根据数据isEnd判断
 			};
 			return state;
 		case Types.LIST_TEST_POST + '_ERROR':
-			pageStatus = action.refreshState === 1 ? {code: action.code, isFetched: false} : {code: action.code};
 			state = {
 				...state,
-				...changePageStatus(state, pageStatus),
+				...changePageStatus(state, {code: action.code}),
+				list: action.refreshState === 1 ? [] : state.list,
 				status: 4
 			};
 			return state;
 		case Types.LIST_TEST_POST + '_REFRESH':
 			state = {
 				...state,
-				...changePageStatus(state, {code: 0, isFetched: true}),
+				...changePageStatus(state, {code: 0}),
 				list: action.data,
 				status: 0               //根据数据isEnd判断
 			};

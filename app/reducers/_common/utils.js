@@ -4,19 +4,17 @@
 export const initPageStatus = () => {
 	return {
 		pageStatus: {
-			code: 1,
-			isFetched: false,
+			code: 1
 		},
 	}
 };
 
-export const changePageStatus = (state, {code, isFetched}) => {
+export const changePageStatus = (state, {code}) => {
 	if (state.hasOwnProperty('pageStatus')) {
 		return {
 			pageStatus: {
 				...state.pageStatus,
-				code: code !== undefined ? code : state.pageStatus.code,
-				isFetched: isFetched !== undefined ? isFetched : state.pageStatus.isFetched
+				code: code !== undefined ? code : state.pageStatus.code
 			}
 		}
 	}

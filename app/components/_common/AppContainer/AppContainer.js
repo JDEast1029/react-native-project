@@ -29,8 +29,6 @@ class AppContainer extends Component {
 	renderPage() {
 		const { pageStatus } = this.props;
 
-		if (pageStatus.isFetched) return this.renderIdlePage();
-
 		switch (pageStatus.code) {
 			case PageStatus.NET_ERROR:
 				return (
@@ -48,6 +46,7 @@ class AppContainer extends Component {
 				return (
 					<PageLoading />
 				);
+			case PageStatus.IDLE:
 			default:
 				return this.renderIdlePage();
 		}
