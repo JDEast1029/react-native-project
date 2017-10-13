@@ -9,6 +9,7 @@ import {
 	TouchableOpacity,
 	Platform,
 	Dimensions,
+	StatusBar
 } from 'react-native';
 import Svg from '../../../components/_common/Svg/Svg'
 import styles from './Styles';
@@ -46,6 +47,21 @@ class TitleBar extends PureComponent {
 			}
 		});
 		return button;
+	}
+
+	/**
+	 * 沉浸式状态栏时，给titleBar添加一部分高度
+	 * @returns {XML}
+	 */
+	renderStatusBar() {
+		const {isImmersive, style} = this.props;
+		if (isImmersive) {
+			return (
+				<View
+					style={{height: StatusBar.currentHeight, backgroundColor: (style && style.backgroundColor) || '#fff'}}
+				/>
+			)
+		}
 	}
 
 	/**
@@ -102,19 +118,22 @@ class TitleBar extends PureComponent {
 		} = this.props;
 
         return (
-			<View style={[styles.container, style]}>
-				{
-					back ?
-						<View style={styles.leftBtn}>
-							{this.renderLeftBtn()}
-						</View>
-						: null
-				}
+			<View>
+				{this.renderStatusBar()}
+				<View style={[styles.container, style]}>
+					{
+						back ?
+							<View style={styles.leftBtn}>
+								{this.renderLeftBtn()}
+							</View>
+							: null
+					}
 
-				<Text style={[styles.title, titleStyle]}>{title}</Text>
+					<Text style={[styles.title, titleStyle]}>{title}</Text>
 
-				<View style={styles.rightBtn}>
-					{this.renderRightBtn()}
+					<View style={styles.rightBtn}>
+						{this.renderRightBtn()}
+					</View>
 				</View>
 			</View>
         )

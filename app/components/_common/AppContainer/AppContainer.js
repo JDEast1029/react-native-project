@@ -73,7 +73,8 @@ class AppContainer extends Component {
 	render() {
 		const {
 			titleBarConfig={},
-			showTitleBar
+			showTitleBar,
+			isImmersive
 		} = this.props;
 
 		return (
@@ -84,6 +85,7 @@ class AppContainer extends Component {
 							title={titleBarConfig.title}
 							onLeftBtnClick={titleBarConfig.onLeftBtnClick}
 							back={titleBarConfig.back}
+							isImmersive={isImmersive}
 						/>
 						: null
 				}

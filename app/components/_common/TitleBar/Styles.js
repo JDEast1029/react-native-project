@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		borderBottomWidth: StyleSheet.hairlineWidth,
 		borderBottomColor: '#c4c4c4',
-		elevation: 2
+		// elevation: 2
 	},
 	title: {
 		fontSize: 36 * HEIGHT_SCALE,
