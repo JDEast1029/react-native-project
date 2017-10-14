@@ -25,7 +25,8 @@ class Input extends Component {
 	}
 
 	handleOnChangeText(value) {
-		this.setState({value})
+		this.setState({value});
+		this.props.onChange(value)
 	}
 
 	renderField() {

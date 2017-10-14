@@ -16,7 +16,7 @@ class Button extends PureComponent {
 
 	renderContent() {
 		const { content } = this.props;
-		if (typeof content === 'string') {
+		if (!React.isValidElement(content)) {
 			return (
 				<Text style={styles.content}>
 					{content}
@@ -47,7 +47,9 @@ const styles = StyleSheet.create({
 		paddingTop: 10 * HEIGHT_SCALE,
 		paddingBottom: 10 * HEIGHT_SCALE,
 		alignItems: 'center',
-		width: 200 * WIDTH_SCALE
+		minWidth: 200 * WIDTH_SCALE,
+		marginHorizontal: 20 * WIDTH_SCALE,
+		marginVertical: 20 * HEIGHT_SCALE,
 	},
 	content: {
 		color: '#fff',
