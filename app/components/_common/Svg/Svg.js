@@ -3,7 +3,7 @@
  */
 import React, { PureComponent } from 'react';
 
-import SvgUri from '../lib/react-native-svg-uri/SvgUri';
+import SvgUri from '../_lib/react-native-svg-uri/SvgUri';
 import svgs from '../../../common/svg/svgs';
 
 export default class Svg extends PureComponent {
