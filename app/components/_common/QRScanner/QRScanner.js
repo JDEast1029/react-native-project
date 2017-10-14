@@ -8,18 +8,15 @@ import {
 	StyleSheet,
 	InteractionManager,
 	ActivityIndicator,
-	Animated,
-	Easing,
 	Vibration
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { Toast } from 'antd-mobile';
 
 //业务组件、常量
 import Camera from 'react-native-camera';
 import Svg from '../Svg/Svg';
 import ViewFinder from './ViewFinder';
-import {HEIGHT_SCALE, WIDTH_SCALE, LIGHT_MAIN_COLOR, MAIN_COLOR, WINDOW_WIDTH} from '../../../common/AppConst';
+import {HEIGHT_SCALE, WIDTH_SCALE, LIGHT_MAIN_COLOR} from '../../../common/AppConst';
 
 class QRScanner extends Component {
 	static propTypes = {
@@ -32,7 +29,7 @@ class QRScanner extends Component {
 		])
 	};
 
-	static  defaultProps = {
+	static defaultProps = {
 		onBarCodeRead: () => {},
 		title: '二维码扫描'
 	};
