@@ -18,6 +18,7 @@ import { Toast } from 'antd-mobile';
 //业务组件、常量
 import Camera from 'react-native-camera';
 import Svg from '../Svg/Svg';
+import ViewFinder from './ViewFinder';
 import {HEIGHT_SCALE, WIDTH_SCALE, LIGHT_MAIN_COLOR, MAIN_COLOR, WINDOW_WIDTH} from '../../../common/AppConst';
 
 class QRScanner extends Component {
@@ -40,7 +41,6 @@ class QRScanner extends Component {
 		super(props);
 		this.state = {
 			show: false,
-			scanLine: new Animated.Value(0),
 			lightOff: true
 		};
 		this.toggleFlashLight = this.toggleFlashLight.bind(this);
@@ -51,31 +51,9 @@ class QRScanner extends Component {
 		InteractionManager.runAfterInteractions(() => {
 			this.setState({show: true});
 			setTimeout(() => {
-				this.isEndAnimation = false;
-				this.lineAnimated();
+				this.viewFinder.startAnimate();
 			}, 1000)
 		})
-	}
-
-	componentWillUnmount() {
-		this.isEndAnimation = true;
-	}
-
-	/**
-	 * 扫描动画
-	 */
-	lineAnimated() {
-		this.state.scanLine.setValue(0);
-		Animated.timing(this.state.scanLine, {
-			toValue: 500 * WIDTH_SCALE,
-			duration: 2000,
-			easing: Easing.linear,
-			useNativeDriver: true
-		}).start(() => {
-			if (!this.isEndAnimation){
-				this.lineAnimated()
-			}
-		});
 	}
 
 	/**
@@ -112,59 +90,9 @@ class QRScanner extends Component {
 		)
 	}
 
-	renderTitle() {
-		const { title } = this.props;
-		if (!React.isValidElement(title)) {
-			return <Text style={styles.describeText}>{title}</Text>
-		}
-		return title;
-	}
-
-	/**
-	 * 换面预览上面的遮罩
-	 */
-	renderScanView() {
-		const { cornerColor=MAIN_COLOR } = this.props;
-		return (
-			<View style={styles.modal}>
-				<View style={styles.viewHeader}>
-					{this.renderTitle()}
-				</View>
-				<View style={{flexDirection: 'row'}}>
-					<View style={styles.shade}/>
-					<View style={styles.qrcode}>
-						<Animated.View style={[styles.line, {backgroundColor: cornerColor}, {
-							transform: [{
-								translateY: this.state.scanLine
-							}]
-						}]}/>
-						{/*扫码框边角*/}
-						<View style={{backgroundColor: cornerColor, position: 'absolute', width: 50 * WIDTH_SCALE, height: 7  * HEIGHT_SCALE, top: 0,    left: 0}}/>
-						<View style={{backgroundColor: cornerColor, position: 'absolute', width: 50 * WIDTH_SCALE, height: 7  * HEIGHT_SCALE, top: 0,    right: 0}}/>
-						<View style={{backgroundColor: cornerColor, position: 'absolute', width: 7  * WIDTH_SCALE, height: 50 * HEIGHT_SCALE, top: 0,    left: 0}}/>
-						<View style={{backgroundColor: cornerColor, position: 'absolute', width: 7  * WIDTH_SCALE, height: 50 * HEIGHT_SCALE, top: 0,    right: 0}}/>
-						<View style={{backgroundColor: cornerColor, position: 'absolute', width: 7  * WIDTH_SCALE, height: 50 * HEIGHT_SCALE, bottom: 0, left: 0}}/>
-						<View style={{backgroundColor: cornerColor, position: 'absolute', width: 7  * WIDTH_SCALE, height: 50 * HEIGHT_SCALE, bottom: 0, right: 0}}/>
-						<View style={{backgroundColor: cornerColor, position: 'absolute', width: 50 * WIDTH_SCALE, height: 7  * HEIGHT_SCALE, bottom: 0, left: 0}}/>
-						<View style={{backgroundColor: cornerColor, position: 'absolute', width: 50 * WIDTH_SCALE, height: 7  * HEIGHT_SCALE, bottom: 0, right: 0}}/>
-					</View>
-					<View style={styles.shade}/>
-				</View>
-				<View style={[styles.shade, styles.viewFooter]}>
-					<Svg
-						icon={this.state.lightOff ? 'ic-light-off' : 'ic-light-on'}
-						size={50 * WIDTH_SCALE}
-						color={'#fff'}
-						style={{marginTop: 60 * HEIGHT_SCALE}}
-						onPress={this.toggleFlashLight}
-					/>
-				</View>
-			</View>
-		)
-	}
-
 	render() {
 		const { show, lightOff } = this.state;
+		const { cornerColor,title } = this.props;
 
 		if (!show) return this.renderSplash();
 		return (
@@ -177,7 +105,21 @@ class QRScanner extends Component {
 					torchMode={lightOff ? Camera.constants.TorchMode.off : Camera.constants.TorchMode.on} //手电筒模式
 					onBarCodeRead={this.onBarCodeRead}
 					aspect={Camera.constants.Aspect.fill}>
-					{this.renderScanView()}
+
+					<ViewFinder
+						ref={(viewFinder) => this.viewFinder = viewFinder}
+						cornerColor={cornerColor}
+						title={title}
+						footerView={
+							<Svg
+								icon={this.state.lightOff ? 'ic-light-off' : 'ic-light-on'}
+								size={50 * WIDTH_SCALE}
+								color={'#fff'}
+								style={{marginTop: 60 * HEIGHT_SCALE}}
+								onPress={this.toggleFlashLight}
+							/>
+						}
+					/>
 				</Camera>
 			</View>
 		);
@@ -210,44 +152,6 @@ const styles = StyleSheet.create({
 		backgroundColor: '#060606',
 		justifyContent: 'center',
 		alignItems: 'center'
-	},
-
-	modal: {
-		flex: 1,
-		width: WINDOW_WIDTH,
-	},
-
-	shade: {
-		flex: 1,
-		backgroundColor: 'rgba(1, 1, 1, 0.65)',
-	},
-
-	qrcode: {
-		width: 500 * WIDTH_SCALE,
-		height: 500 * WIDTH_SCALE,
-		alignItems: 'center',
-	},
-
-	line: {
-		width: 490 * WIDTH_SCALE,
-		height: StyleSheet.hairlineWidth * 2
-	},
-
-	viewHeader: {
-		backgroundColor: 'rgba(1, 1, 1, 0.65)',
-		justifyContent: 'center',
-		alignItems: 'center',
-		paddingBottom: 200 * HEIGHT_SCALE
-	},
-
-	viewFooter: {
-		backgroundColor: 'rgba(1, 1, 1, 0.65)',
-		alignItems: 'center'
-	},
-	describeText: {
-		color: '#FFFFFF',
-		fontSize: 30 * HEIGHT_SCALE,
-		marginTop: 100 * HEIGHT_SCALE
 	}
 });
 
