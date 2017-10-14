@@ -3,7 +3,8 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 //业务组件、常量
 import Svg from '../../../components/_common/Svg/Svg'
 import AppButton from '../../../components/_common/Button/Button';
-import {HEIGHT_SCALE, WIDTH_SCALE} from '../../../common/AppConst';
+import {HEIGHT_SCALE, WIDTH_SCALE, GRAY_COLOR} from '../../../common/AppConst';
+import ImagePreview from '../../../components/_common/ImagePreview/ImagePreview';
 
 class Home extends React.Component {
 	static navigationOptions = {
@@ -30,6 +31,22 @@ class Home extends React.Component {
 					content='go to list'
 					onPress={() => navigate('ListTest')}
 				/>
+
+				<AppButton
+					content='go to image preview'
+					onPress={() => navigate('ImagePreview')}
+				/>
+
+				<AppButton
+					content='go to camera'
+					onPress={() => navigate('Camera')}
+				/>
+				{/*<ImagePreview />*/}
+				{/*<Input*/}
+					{/*field="Name"*/}
+					{/*selectionColor={GRAY_COLOR}*/}
+					{/*secureTextEntry={true}*/}
+				{/*/>*/}
 			</View>
 		);
 	}
