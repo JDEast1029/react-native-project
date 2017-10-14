@@ -15,8 +15,6 @@ import {
 import PropTypes from 'prop-types';
 // import { Modal } from 'antd-mobile';
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../../../common/AppConst';
-import ImageZoom from './ImageZoom';
-import TransformView from './TransformView';
 import AlbumView from 'teaset/components/AlbumView/AlbumView';
 
 const images = [{
